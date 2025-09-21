@@ -1,0 +1,86 @@
+<!-- Movie Finder — index.html Single-page UI with:
+header + native-validated search (required, minlength=2), results grid with pager, favorites sidebar (counts + list), details modal, and TMDB legal notice in the footer.
+Pure HTML/CSS/vanilla JS (styles.css, app.js).
+All API calls go to the backend; no keys exposed on the client. Accessible landmarks/ARIA are included; layout is responsive. -->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Movie Finder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Search movies and view details using the TMDB API via a secure Java backend." />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+            rel="icon"
+            href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232563eb'/%3E%3Cpath d='M20 20h8v24h-8zM36 20h8v24h-8z' fill='white'/%3E%3C/svg%3E"
+    />
+</head>
+<body>
+<noscript>
+    <div style="margin:16px; padding:12px; border:1px solid #e5e7eb; border-radius:8px; background:#fff0f0; color:#7f1d1d;">
+        JavaScript is required to use Movie Finder.
+    </div>
+</noscript>
+
+<div id="app" class="container">
+    <header class="topbar">
+        <h1 class="brand">🎬 Movie Finder</h1>
+        <form id="searchForm" class="search" role="search" aria-label="Movie search">
+            <input
+                    id="queryInput"
+                    name="query"
+                    type="search"
+                    inputmode="search"
+                    placeholder="Search by title (e.g., Inception)"
+                    aria-label="Search movies"
+                    required
+                    minlength="2"
+            />
+            <button id="searchBtn" type="submit" aria-label="Search">Search</button>
+        </form>
+    </header>
+
+    <main class="layout">
+        <section class="results">
+            <div class="section-head">
+                <h2>Results</h2>
+                <div id="statusArea" class="status" aria-live="polite"></div>
+            </div>
+
+            <div id="results" class="grid" aria-live="polite" aria-busy="false"></div>
+
+            <nav class="pager" aria-label="Pagination">
+                <button id="prevPage" type="button" disabled>Prev</button>
+                <span id="pageInfo" aria-live="polite">Page 1</span>
+                <button id="nextPage" type="button" disabled>Next</button>
+            </nav>
+        </section>
+
+        <aside class="favorites" aria-labelledby="favHeading">
+            <div class="section-head">
+                <h2 id="favHeading">Favorites <span id="favoritesCount" class="badge">0</span></h2>
+            </div>
+            <div id="favoritesList" class="fav-list" aria-live="polite"></div>
+        </aside>
+    </main>
+
+    <div id="detailsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal-card">
+            <button id="modalClose" class="modal-close" aria-label="Close details">×</button>
+            <div id="modalContent" class="modal-content">
+                <h3 id="modalTitle" class="modal-title">Loading…</h3>
+            </div>
+        </div>
+        <div class="modal-backdrop"></div>
+    </div>
+
+    <footer class="footer">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+    </footer>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
